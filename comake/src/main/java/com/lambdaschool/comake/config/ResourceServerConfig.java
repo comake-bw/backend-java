@@ -51,6 +51,10 @@ public class ResourceServerConfig
                 "/swagger-ui.html",
                 "/v2/api-docs",
                 "/webjars/**",
+                "/posts/**",
+                "/issues/**",
+                "/locations/**",
+                "/likes/**",
                 "/createnewuser")
             .permitAll()
             .antMatchers("/users/**",
@@ -59,7 +63,7 @@ public class ResourceServerConfig
                 "/logout")
             .authenticated()
             .antMatchers("/roles/**")
-            .hasAnyRole("ADMIN", "DATA")
+            .hasAnyRole("ADMIN", "USER")
             .and()
             .exceptionHandling()
             .accessDeniedHandler(new OAuth2AccessDeniedHandler());
