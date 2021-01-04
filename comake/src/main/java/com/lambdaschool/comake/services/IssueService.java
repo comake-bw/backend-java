@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IssueService
 {
-    List<User> findAll();
+    List<Issue> findAll();
 
     Issue findIssueById(long id);
 
@@ -15,7 +15,9 @@ public interface IssueService
 
     Issue update(long issueid, Issue issue);
 
-    Issue save(long issueid, Issue issue);
+    Issue save(Issue issue);
 
-
+    List<Issue> findListByUserid(long id);
+    List<Issue> findListByLocationid(long id);
+    List<Issue> findListByZipcode(long zipcode);
 }
