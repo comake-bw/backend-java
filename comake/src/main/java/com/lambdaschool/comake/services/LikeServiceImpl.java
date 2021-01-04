@@ -1,5 +1,109 @@
 package com.lambdaschool.comake.services;
 
-public class LikeServiceImpl
+import com.lambdaschool.comake.exceptions.ResourceFoundException;
+import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
+import com.lambdaschool.comake.models.Like;
+import com.lambdaschool.comake.models.Like;
+import com.lambdaschool.comake.repository.LikeRepository;
+import com.lambdaschool.comake.repository.LikeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Transactional
+@Service("likeService")
+public class LikeServiceImpl implements LikeService
 {
+    @Autowired
+    LikeRepository likerepos;
+
+    @Override
+    public List<Like> findAll()
+    {
+        List<Like> list = new ArrayList<>();
+        likerepos.findAll()
+            .iterator()
+            .forEachRemaining(list::add);
+        return list;
+
+    }
+
+    @Override
+    public Like findLikeById(long id)
+    {
+        return likerepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Like with id " + id + " Not Found!"));
+    }
+
+    @Transactional
+    @Override
+    public void delete(long id)
+    {
+        Like goodbyeLike = findLikeById(id);
+        if (goodbyeLike != null)
+        {
+            likerepos.deleteById(id);
+
+        } else
+        {
+            throw new ResourceNotFoundException("Like with id " + id + " Not Found!");
+        }
+    }
+
+    @Transactional
+    @Override
+    public Like save(Like Like)
+    {
+        Like newLike = new Like();
+
+        return likerepos.save(newLike);
+    }
+
+    @Transactional
+    @Override
+    public Like update(Like Like, long id)
+    {
+        Like currentLike = findLikeById(id);
+
+
+        if (Like.getZipcode() != 0)
+        {
+            currentLike.setZipcode(Like.getZipcode());
+        }
+
+        return likerepos.save(currentLike);
+    }
+
+    @Override
+    public List<Like> findLikesByUserid(long id)
+    {
+        List<Like> list = new ArrayList<>();
+        likerepos.findAll()
+            .iterator()
+            .forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
+    public List<Like> findLikesByPostid(long id)
+    {
+        List<Like> list = new ArrayList<>();
+        likerepos.findAll()
+            .iterator()
+            .forEachRemaining(list::add);
+        return list;
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll()
+    {
+        likerepos.deleteAll();
+    }
+    
+    
 }

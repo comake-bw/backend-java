@@ -1,5 +1,86 @@
 package com.lambdaschool.comake.services;
 
-public class IssueServiceImpl
+import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
+import com.lambdaschool.comake.models.Issue;
+import com.lambdaschool.comake.models.User;
+import com.lambdaschool.comake.repository.IssueRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service(value = "issueService")
+public class IssueServiceImpl implements IssueService
 {
+    @Autowired
+    private IssueRepository issuerepos;
+
+
+    @Override
+    public List<User> findAll()
+    {
+        List<User> list = new ArrayList<>();
+        /*
+         * findAll returns an iterator set.
+         * iterate over the iterator set and add each element to an array list.
+         */
+        issuerepos.findAll()
+            .iterator()
+            .forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
+    public Issue findIssueById(long id)
+    {
+        return issuerepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Issue id " + id + " not found!"));
+    }
+
+    @Override
+    public void delete(long id)
+    {
+        issuerepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product id " + id + " not found!"));
+        issuerepos.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Issue update(
+        long id,
+        Issue issue)
+    {
+        Issue currentIssue = issuerepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Issue id " + id + " not found!"));
+
+        if (issue.getDescription() != null) {
+            currentIssue.setDescription(issue.getDescription());
+        }
+        if (issue.getImageurl() != null) {
+            currentIssue.setImageurl(issue.getImageurl());
+        }
+
+        return issuerepos.save(currentIssue);
+    }
+
+    @Transactional
+    @Override
+    public Issue save(Issue issue)
+    {
+        Issue newIssue = new Issue();
+
+        if (issue.getissueid() != 0) {
+            newIssue = issuerepos.findById(issue.getissueid())
+                .orElseThrow(() -> new ResourceNotFoundException("Issue id " + issue.getissueid() + " not found!"));
+        }
+
+        newIssue.setLocation(issue.getLocation());
+        newIssue.setDescription(issue.getDescription());
+        newIssue.setImageurl(issue.getImageurl());
+
+        return issuerepos.save(newIssue);
+    }
 }

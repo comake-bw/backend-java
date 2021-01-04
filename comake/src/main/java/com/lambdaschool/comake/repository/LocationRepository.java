@@ -1,5 +1,8 @@
 package com.lambdaschool.comake.repository;
 
-public interface LocationRepository
+import com.lambdaschool.comake.models.Location;
+import org.springframework.data.repository.CrudRepository;
+
+public interface LocationRepository extends CrudRepository<Location, Long>
 {
 }

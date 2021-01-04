@@ -15,7 +15,6 @@ public interface IssueService
 
     Issue update(long issueid, Issue issue);
 
-    Issue save(long issueid, Issue issue);
-
+    Issue save(Issue issue);
 
 }

@@ -25,6 +25,12 @@ public class Location
     @JsonIgnoreProperties(value = "location", allowSetters = true)
     private List<User> users = new ArrayList<>();
 
+    @OneToMany(mappedBy = "location",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "location", allowSetters = true)
+    private List<Issue> issues = new ArrayList<>();
+
     public Location()
     {
     }
@@ -63,5 +69,15 @@ public class Location
     public void setUsers(List<User> users)
     {
         this.users = users;
+    }
+
+    public List<Issue> getIssues()
+    {
+        return issues;
+    }
+
+    public void setIssues(List<Issue> issues)
+    {
+        this.issues = issues;
     }
 }
