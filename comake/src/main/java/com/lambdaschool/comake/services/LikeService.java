@@ -11,7 +11,7 @@ public interface LikeService
 
     List<Like> findLikesByUserid(long id);
 
-    List<Like> findLikesByPostid(long id);
+    List<Like> findLikesByIssueid(long id);
 
     Like findLikeById(long id);
 

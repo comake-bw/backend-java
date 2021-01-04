@@ -2,6 +2,7 @@ package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Issue;
+import com.lambdaschool.comake.models.Like;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.repository.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ public class IssueServiceImpl implements IssueService
 
 
     @Override
-    public List<User> findAll()
+    public List<Issue> findAll()
     {
-        List<User> list = new ArrayList<>();
+        List<Issue> list = new ArrayList<>();
         /*
          * findAll returns an iterator set.
          * iterate over the iterator set and add each element to an array list.
@@ -82,5 +83,44 @@ public class IssueServiceImpl implements IssueService
         newIssue.setImageurl(issue.getImageurl());
 
         return issuerepos.save(newIssue);
+    }
+
+    @Override
+    public List<Issue> findListByUserid(long id)
+    {
+        Iterable<Issue> list = issuerepos.findAll();
+        List<Issue> filteredList = new ArrayList<>();
+        for (Issue item: list) {
+            if (item.getUser().getUserid() == id) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
+    }
+
+    @Override
+    public List<Issue> findListByLocationid(long id)
+    {
+        Iterable<Issue> list = issuerepos.findAll();
+        List<Issue> filteredList = new ArrayList<>();
+        for (Issue item: list) {
+            if (item.getLocation().getLocationid() == id) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
+    }
+
+    @Override
+    public List<Issue> findListByZipcode(long zipcode)
+    {
+        Iterable<Issue> list = issuerepos.findAll();
+        List<Issue> filteredList = new ArrayList<>();
+        for (Issue item: list) {
+            if (item.getLocation().getZipcode() == zipcode) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
     }
 }

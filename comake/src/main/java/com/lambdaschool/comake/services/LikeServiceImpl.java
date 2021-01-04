@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -68,34 +69,33 @@ public class LikeServiceImpl implements LikeService
     public Like update(Like Like, long id)
     {
         Like currentLike = findLikeById(id);
-
-
-        if (Like.getZipcode() != 0)
-        {
-            currentLike.setZipcode(Like.getZipcode());
-        }
-
         return likerepos.save(currentLike);
     }
 
     @Override
     public List<Like> findLikesByUserid(long id)
     {
-        List<Like> list = new ArrayList<>();
-        likerepos.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
-        return list;
+        Iterable<Like> list = likerepos.findAll();
+        List<Like> filteredList = new ArrayList<>();
+        for (Like item: list) {
+            if (item.getUser().getUserid() == id) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
     }
 
     @Override
-    public List<Like> findLikesByPostid(long id)
+    public List<Like> findLikesByIssueid(long id)
     {
-        List<Like> list = new ArrayList<>();
-        likerepos.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
-        return list;
+        Iterable<Like> list = likerepos.findAll();
+        List<Like> filteredList = new ArrayList<>();
+        for (Like item: list) {
+            if (item.getIssue().getissueid() == id) {
+                filteredList.add(item);
+            }
+        }
+        return filteredList;
     }
 
     @Transactional
