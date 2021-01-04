@@ -1,5 +1,6 @@
 package com.lambdaschool.comake.exceptions;
 
+import com.lambdaschool.comake.services.HelperFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
