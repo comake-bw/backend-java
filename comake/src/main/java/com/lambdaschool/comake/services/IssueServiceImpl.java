@@ -21,6 +21,9 @@ public class IssueServiceImpl implements IssueService
     private IssueRepository issuerepos;
 
     @Autowired
+    private IssueService issueService;
+
+    @Autowired
     private LocationRepository locationrepos;
 
 
@@ -94,7 +97,7 @@ public class IssueServiceImpl implements IssueService
     @Override
     public List<Issue> findListByUserid(long id)
     {
-        Iterable<Issue> list = issuerepos.findAll();
+        Iterable<Issue> list = issueService.findAll();
         List<Issue> filteredList = new ArrayList<>();
         for (Issue item: list) {
             if (item.getUser().getUserid() == id) {
@@ -107,7 +110,7 @@ public class IssueServiceImpl implements IssueService
     @Override
     public List<Issue> findListByLocationid(long id)
     {
-        Iterable<Issue> list = issuerepos.findAll();
+        Iterable<Issue> list = issueService.findAll();
         List<Issue> filteredList = new ArrayList<>();
         for (Issue item: list) {
             if (item.getLocation().getLocationid() == id) {
@@ -120,7 +123,7 @@ public class IssueServiceImpl implements IssueService
     @Override
     public List<Issue> findListByZipcode(long zipcode)
     {
-        Iterable<Issue> issueList = issuerepos.findAll();
+        Iterable<Issue> issueList = issueService.findAll();
         List<Issue> filteredList = new ArrayList<>();
         for (Issue item: issueList) {
             if (item.getLocation().getZipcode() == zipcode) {

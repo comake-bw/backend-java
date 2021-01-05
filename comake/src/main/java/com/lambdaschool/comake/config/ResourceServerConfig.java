@@ -59,6 +59,10 @@ public class ResourceServerConfig
             .permitAll()
             .antMatchers("/users/**",
                 "/useremails/**",
+                "/posts/**",
+                "/issues/**",
+                "/locations/**",
+                "/likes/**",
                 "/oauth/revoke-token",
                 "/logout")
             .authenticated()

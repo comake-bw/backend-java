@@ -37,26 +37,26 @@ public class LikeController
 
 
     // GET http://localhost:2019/likes/likes/{postid} get all likes by postid
-    @GetMapping(value = "/likes/{postid}",
+    @GetMapping(value = "/post/{postid}",
         produces = {"application/json"})
     public ResponseEntity<?> getLikesByPostid(HttpServletRequest request,
                                                @PathVariable
                                                    Long postid)
     {
         List<Like> rtnList = likeService.findLikesByIssueid(postid);
-        return new ResponseEntity<>(rtnList,
+        return new ResponseEntity<>(rtnList.size(),
             HttpStatus.OK);
     }
 
     // GET http://localhost:2019/likes/likes/{userid} get all likes by userid
-    @GetMapping(value = "/likes/{userid}",
+    @GetMapping(value = "/user/{userid}",
         produces = {"application/json"})
     public ResponseEntity<?> getLikesByUserid(HttpServletRequest request,
                                               @PathVariable
                                                   Long userid)
     {
         List<Like> rtnList = likeService.findLikesByUserid(userid);
-        return new ResponseEntity<>(rtnList,
+        return new ResponseEntity<>(rtnList.size(),
             HttpStatus.OK);
     }
 

@@ -21,11 +21,15 @@ public class Location extends Auditable
     @Column(nullable = false, unique = true)
     private long zipcode;
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
     @JsonIgnoreProperties("location")
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
     @JsonIgnoreProperties("location")
     private Set<Issue> issues = new HashSet<>();
 

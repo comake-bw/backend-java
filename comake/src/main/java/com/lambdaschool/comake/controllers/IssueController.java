@@ -34,7 +34,7 @@ public class IssueController
     }
 
     // GET http://localhost:2019/posts/posts/{locationid} get all posts in location id
-    @GetMapping(value = "/posts/{locationid}",
+    @GetMapping(value = "/location/{locationid}",
         produces = {"application/json"})
     public ResponseEntity<?> getPostsByLocationid(HttpServletRequest request,
                                               @PathVariable
@@ -46,7 +46,7 @@ public class IssueController
     }
 
     // GET http://localhost:2019/posts/posts/{zipcode} get all posts in zipcode
-    @GetMapping(value = "/posts/{zipcode}",
+    @GetMapping(value = "/zipcode/{zipcode}",
         produces = {"application/json"})
     public ResponseEntity<?> getPostsByZipcode(HttpServletRequest request,
                                               @PathVariable
@@ -58,7 +58,7 @@ public class IssueController
     }
 
     // GET http://localhost:2019/posts/posts/{userid} get all posts by userid
-    @GetMapping(value = "/posts/{userid}",
+    @GetMapping(value = "/userid/{userid}",
         produces = {"application/json"})
     public ResponseEntity<?> getPostsByUserid(HttpServletRequest request,
                                          @PathVariable

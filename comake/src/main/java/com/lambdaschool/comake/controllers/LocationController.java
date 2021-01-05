@@ -76,9 +76,7 @@ public class LocationController
     public ResponseEntity<?> updateLocation(
         @Valid
         @RequestBody
-            Location updateLocation,
-        @PathVariable
-            long locationid)
+            Location updateLocation, @PathVariable long locationid)
     {
         updateLocation.setLocationid(locationid);
         locationService.save(updateLocation);
@@ -89,9 +87,10 @@ public class LocationController
 
     // DELETE http://localhost:2019/posts/post delete entire post
     @DeleteMapping(value = "/location/{id}")
-    public ResponseEntity<?> deleteLocationById(@PathVariable long id)
+    public ResponseEntity<?> deleteLocationByid(@PathVariable long id)
     {
         locationService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

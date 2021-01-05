@@ -2,6 +2,7 @@ package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceFoundException;
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
+import com.lambdaschool.comake.models.Like;
 import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +43,24 @@ public class LocationServiceImpl implements LocationService
     {
         locationrepos.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Location id " + id + " not found!"));
+
         locationrepos.deleteById(id);
     }
 
     @Transactional
     @Override
-    public Location save(Location Location)
+    public Location save(Location location)
     {
         Location newLocation = new Location();
-        newLocation.setZipcode(Location.getZipcode());
+
+        if (location.getLocationid() != 0) {
+            newLocation = locationrepos.findById(location.getLocationid())
+                .orElseThrow(() -> new ResourceNotFoundException("Location id " + location.getLocationid() + " not found!"));
+        }
+
+        newLocation.setZipcode(location.getZipcode());
+        newLocation.setIssues(location.getIssues());
+        newLocation.setUsers(location.getUsers());
 
         return locationrepos.save(newLocation);
     }
