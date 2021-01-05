@@ -75,14 +75,14 @@ public class IssueController
                                         @RequestBody Issue newIssue) throws
                                                                    URISyntaxException
     {
-        newIssue.setissueid(0);
+        newIssue.setIssueid(0);
         newIssue = issueService.save(newIssue);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newBookURI = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{issueid}")
-            .buildAndExpand(newIssue.getissueid())
+            .buildAndExpand(newIssue.getIssueid())
             .toUri();
         responseHeaders.setLocation(newBookURI);
 
@@ -102,7 +102,7 @@ public class IssueController
         @PathVariable
             long postid)
     {
-        updateIssue.setissueid(postid);
+        updateIssue.setIssueid(postid);
         issueService.save(updateIssue);
 
         return new ResponseEntity<>(HttpStatus.OK);

@@ -3,8 +3,10 @@ package com.lambdaschool.comake.services;
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Issue;
 import com.lambdaschool.comake.models.Like;
+import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.repository.IssueRepository;
+import com.lambdaschool.comake.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class IssueServiceImpl implements IssueService
 {
     @Autowired
     private IssueRepository issuerepos;
+
+    @Autowired
+    private LocationRepository locationrepos;
 
 
     @Override
@@ -73,14 +78,15 @@ public class IssueServiceImpl implements IssueService
     {
         Issue newIssue = new Issue();
 
-        if (issue.getissueid() != 0) {
-            newIssue = issuerepos.findById(issue.getissueid())
-                .orElseThrow(() -> new ResourceNotFoundException("Issue id " + issue.getissueid() + " not found!"));
+        if (issue.getIssueid() != 0) {
+            newIssue = issuerepos.findById(issue.getIssueid())
+                .orElseThrow(() -> new ResourceNotFoundException("Issue id " + issue.getIssueid() + " not found!"));
         }
 
         newIssue.setLocation(issue.getLocation());
         newIssue.setDescription(issue.getDescription());
         newIssue.setImageurl(issue.getImageurl());
+        newIssue.setUser(issue.getUser());
 
         return issuerepos.save(newIssue);
     }
@@ -114,13 +120,20 @@ public class IssueServiceImpl implements IssueService
     @Override
     public List<Issue> findListByZipcode(long zipcode)
     {
-        Iterable<Issue> list = issuerepos.findAll();
+        Iterable<Issue> issueList = issuerepos.findAll();
         List<Issue> filteredList = new ArrayList<>();
-        for (Issue item: list) {
+        for (Issue item: issueList) {
             if (item.getLocation().getZipcode() == zipcode) {
                 filteredList.add(item);
             }
         }
         return filteredList;
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll()
+    {
+        issuerepos.deleteAll();
     }
 }

@@ -4,6 +4,7 @@ import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Role;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.models.UserRoles;
+import com.lambdaschool.comake.repository.LocationRepository;
 import com.lambdaschool.comake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class UserServiceImpl
 
     @Autowired
     private HelperFunctions helperFunctions;
+
+    @Autowired
+    private LocationRepository locationrepos;
 
     public User findUserById(long id) throws
                                       ResourceNotFoundException
@@ -98,6 +102,7 @@ public class UserServiceImpl
         newUser.setUsername(user.getUsername()
             .toLowerCase());
         newUser.setPasswordNoEncrypt(user.getPassword());
+        newUser.setLocation(user.getLocation());
 
         newUser.getRoles()
             .clear();
@@ -106,12 +111,11 @@ public class UserServiceImpl
             Role addRole = roleService.findRoleById(ur.getRole()
                 .getRoleid());
             newUser.getRoles()
-                .add(new UserRoles(newUser,
-                    addRole));
+                .add(new UserRoles(newUser, addRole));
         }
-
         return userrepos.save(newUser);
     }
+
 
     @Transactional
     @Override

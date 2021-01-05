@@ -29,18 +29,24 @@ public class User extends Auditable
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "location",
-    nullable = false)
-    @JsonIgnoreProperties(value = "users", allowGetters = true)
-    private Location location;
-
     @OneToMany(mappedBy = "user",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
     @JsonIgnoreProperties(value = "user",
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user",
+        allowSetters = true)
+    private Set<Issue> issues = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "locationid")
+    @JsonIgnoreProperties({"users", "issues"})
+    private Location location;
 
     public User()
     {
@@ -52,7 +58,7 @@ public class User extends Auditable
         Location location)
     {
         this.username = username;
-        this.password = password;
+        setPassword(password);
         this.location = location;
     }
 
@@ -92,6 +98,15 @@ public class User extends Auditable
         this.password = passwordEncoder.encode(password);
     }
 
+    public Set<Issue> getIssues()
+    {
+        return issues;
+    }
+
+    public void setIssues(Set<Issue> issues)
+    {
+        this.issues = issues;
+    }
 
     public Location getLocation()
     {
