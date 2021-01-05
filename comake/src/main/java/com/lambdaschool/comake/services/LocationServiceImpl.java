@@ -4,7 +4,6 @@ import com.lambdaschool.comake.exceptions.ResourceFoundException;
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.repository.LocationRepository;
-import com.lambdaschool.comake.repository.locationrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,35 +40,16 @@ public class LocationServiceImpl implements LocationService
     @Override
     public void delete(long id)
     {
-        Location goodbyeLocation = findLocationById(id);
-        if (goodbyeLocation != null)
-        {
-            if (goodbyeLocation.getUsers()
-                .size() > 0 || goodbyeLocation.getIssues().size() > 0)
-            {
-                throw new ResourceFoundException("Locations containing users/issues cannot be deleted. Move the users/issues to a new Location first");
-            } else
-            {
-                locationrepos.deleteById(id);
-            }
-        } else
-        {
-            throw new ResourceNotFoundException("Location with id " + id + " Not Found!");
-        }
+        locationrepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Location id " + id + " not found!"));
+        locationrepos.deleteById(id);
     }
 
     @Transactional
     @Override
     public Location save(Location Location)
     {
-        if (Location.getIssues()
-            .size() > 0 || Location.getUsers().size() > 0)
-        {
-            throw new ResourceFoundException("Issues/users are not added through Locations.");
-        }
-
         Location newLocation = new Location();
-
         newLocation.setZipcode(Location.getZipcode());
 
         return locationrepos.save(newLocation);
@@ -81,11 +61,6 @@ public class LocationServiceImpl implements LocationService
                           long id)
     {
         Location currentLocation = findLocationById(id);
-
-        if (Location.getIssues().size() > 0 || Location.getUsers().size() > 0)
-        {
-            throw new ResourceFoundException("Issues/users are not updated through Locations.");
-        }
 
         if (Location.getZipcode() != 0)
         {

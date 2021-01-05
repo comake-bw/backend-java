@@ -57,9 +57,11 @@ public class LikeServiceImpl implements LikeService
 
     @Transactional
     @Override
-    public Like save(Like Like)
+    public Like save(Like like)
     {
         Like newLike = new Like();
+        newLike.setUser(like.getUser());
+        newLike.setIssue(like.getIssue());
 
         return likerepos.save(newLike);
     }
@@ -91,7 +93,7 @@ public class LikeServiceImpl implements LikeService
         Iterable<Like> list = likerepos.findAll();
         List<Like> filteredList = new ArrayList<>();
         for (Like item: list) {
-            if (item.getIssue().getissueid() == id) {
+            if (item.getIssue().getIssueid() == id) {
                 filteredList.add(item);
             }
         }

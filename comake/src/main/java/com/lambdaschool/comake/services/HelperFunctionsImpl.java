@@ -1,5 +1,6 @@
 package com.lambdaschool.comake.services;
 
+import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.ValidationError;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.security.core.Authentication;

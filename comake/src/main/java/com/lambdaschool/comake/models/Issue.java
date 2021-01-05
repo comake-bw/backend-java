@@ -22,14 +22,14 @@ public class Issue extends Auditable
     @ManyToOne
     @JoinColumn(name = "userid",
         nullable = false)
-    @JsonIgnoreProperties(value = "issue",
+    @JsonIgnoreProperties(value = "issues",
         allowSetters = true)
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "locationid",
         nullable = false)
-    @JsonIgnoreProperties(value = "issue",
+    @JsonIgnoreProperties(value = {"issues", "users"},
         allowSetters = true)
     private Location location;
 
@@ -49,12 +49,12 @@ public class Issue extends Auditable
         this.location = location;
     }
 
-    public long getissueid()
+    public long getIssueid()
     {
         return issueid;
     }
 
-    public void setissueid(long issueid)
+    public void setIssueid(long issueid)
     {
         this.issueid = issueid;
     }

@@ -6,11 +6,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "locations")
-public class Location
+public class Location extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,17 +21,14 @@ public class Location
     @Column(nullable = false, unique = true)
     private long zipcode;
 
-    @OneToMany(mappedBy = "location",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    @JsonIgnoreProperties(value = "location", allowSetters = true)
-    private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "location")
+    @JsonIgnoreProperties("location")
+    private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "location",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
-    @JsonIgnoreProperties(value = "location", allowSetters = true)
-    private List<Issue> issues = new ArrayList<>();
+    @OneToMany(mappedBy = "location")
+    @JsonIgnoreProperties("location")
+    private Set<Issue> issues = new HashSet<>();
+
 
     public Location()
     {
@@ -61,22 +60,22 @@ public class Location
         this.zipcode = zipcode;
     }
 
-    public List<User> getUsers()
+    public Set<User> getUsers()
     {
         return users;
     }
 
-    public void setUsers(List<User> users)
+    public void setUsers(Set<User> users)
     {
         this.users = users;
     }
 
-    public List<Issue> getIssues()
+    public Set<Issue> getIssues()
     {
         return issues;
     }
 
-    public void setIssues(List<Issue> issues)
+    public void setIssues(Set<Issue> issues)
     {
         this.issues = issues;
     }

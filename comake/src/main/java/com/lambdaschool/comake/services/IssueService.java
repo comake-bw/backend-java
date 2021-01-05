@@ -20,4 +20,7 @@ public interface IssueService
     List<Issue> findListByUserid(long id);
     List<Issue> findListByLocationid(long id);
     List<Issue> findListByZipcode(long zipcode);
+
+    void deleteAll();
+
 }
