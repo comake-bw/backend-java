@@ -4,6 +4,8 @@ package com.lambdaschool.comake.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "issues")
@@ -32,6 +34,14 @@ public class Issue extends Auditable
     @JsonIgnoreProperties(value = {"issues", "users"},
         allowSetters = true)
     private Location location;
+
+    // issue likes
+    @OneToMany(mappedBy = "issue",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    @JsonIgnoreProperties(value = "issue",
+    allowSetters = true)
+    private Set<UserIssues> likes = new HashSet<>();
 
     public Issue()
     {
@@ -97,5 +107,15 @@ public class Issue extends Auditable
     public void setLocation(Location location)
     {
         this.location = location;
+    }
+
+    public Set<UserIssues> getLikes()
+    {
+        return likes;
+    }
+
+    public void setLikes(Set<UserIssues> likes)
+    {
+        this.likes = likes;
     }
 }

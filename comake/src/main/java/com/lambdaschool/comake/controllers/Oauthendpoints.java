@@ -4,6 +4,7 @@ import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.models.UserMinimum;
 import com.lambdaschool.comake.models.UserRoles;
+import com.lambdaschool.comake.repository.LocationRepository;
 import com.lambdaschool.comake.services.LocationService;
 import com.lambdaschool.comake.services.RoleService;
 import com.lambdaschool.comake.services.UserService;
@@ -50,6 +51,9 @@ public class Oauthendpoints
 
     @Autowired
     private LocationService locationService;
+    
+    @Autowired
+    private LocationRepository locationrepos;
 
     /**
      * Connect to the Token store so the application can remove the token
@@ -78,27 +82,35 @@ public class Oauthendpoints
     {
         // Create the user
         User newuser = new User();
-        Location newLocation = new Location();
-        newLocation.setZipcode(newminuser.getZipcode());
+//        Location newLocation = new Location();
+//        newLocation.setZipcode(newminuser.getZipcode());
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
+
+        if (locationrepos.findLocationByZipcode(newminuser.getZipcode()) != null) {
+            newuser.setLocation(locationrepos.findLocationByZipcode(newminuser.getZipcode()));
+        } else {
+            Location newLocation = new Location(newminuser.getZipcode());
+            locationrepos.save(newLocation);
+            newuser.setLocation(newLocation);
+        }
 
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
         newRoles.add(new UserRoles(newuser,
             roleService.findByName("USER")));
         newuser.setRoles(newRoles);
-
-
-        // setting users for location
-        Set<User> newUsers = new HashSet<>();
-        newUsers.add(newuser);
-        newLocation.setUsers(newUsers);
-        newLocation = locationService.save(newLocation);
-
-        // add location for new user.
-        newuser.setLocation(newLocation);
+//
+//
+//        // setting users for location
+//        Set<User> newUsers = new HashSet<>();
+//        newUsers.add(newuser);
+//        newLocation.setUsers(newUsers);
+//        newLocation = locationService.save(newLocation);
+//
+//        // add location for new user.
+//        newuser.setLocation(newLocation);
 
         newuser = userService.save(newuser);
 
