@@ -81,9 +81,9 @@ public class IssueController
                                                                    URISyntaxException
     {
         newIssue.setIssueid(0);
-        newIssue.setUserid(userService.findByName(SecurityContextHolder.getContext()
-            .getAuthentication().getName()).getUserid());
-        newIssue.setLocation(newIssue.getLocation());
+        newIssue.setUser(userService.findByName(SecurityContextHolder.getContext()
+            .getAuthentication().getName()));
+        newIssue.setLocation(newIssue.getUser().getLocation());
 
         newIssue = issueService.save(newIssue);
 
@@ -113,9 +113,9 @@ public class IssueController
     {
         updateIssue.setIssueid(postid);
 
-        updateIssue.setUserid(userService.findByName(SecurityContextHolder.getContext()
-            .getAuthentication().getName()).getUserid());
-        updateIssue.setLocation(updateIssue.getLocation());
+        updateIssue.setUser(userService.findByName(SecurityContextHolder.getContext()
+            .getAuthentication().getName()));
+        updateIssue.setLocation(updateIssue.getUser().getLocation());
 
 
         issueService.save(updateIssue);

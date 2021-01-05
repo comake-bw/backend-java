@@ -86,7 +86,7 @@ public class IssueServiceImpl implements IssueService
         newIssue.setLocation(issue.getLocation());
         newIssue.setDescription(issue.getDescription());
         newIssue.setImageurl(issue.getImageurl());
-        newIssue.setUserid(issue.getUserid());
+        newIssue.setUser(issue.getUser());
 
         return issuerepos.save(newIssue);
     }
@@ -97,7 +97,7 @@ public class IssueServiceImpl implements IssueService
         Iterable<Issue> list = issueService.findAll();
         List<Issue> filteredList = new ArrayList<>();
         for (Issue item: list) {
-            if (item.getUserid() == id) {
+            if (item.getUser().getUserid() == id) {
                 filteredList.add(item);
             }
         }

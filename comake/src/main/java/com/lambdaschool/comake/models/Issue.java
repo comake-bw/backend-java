@@ -21,15 +21,12 @@ public class Issue extends Auditable
     @Column
     private String imageurl;
 
-//    @ManyToOne
-//    @JoinColumn(name = "userid",
-//        nullable = false)
-//    @JsonIgnoreProperties(value = "issues",
-//        allowSetters = true)
-//    private User user;
-
-    @Column(nullable = false)
-    private long userid;
+    @ManyToOne
+    @JoinColumn(name = "userid",
+        nullable = false)
+    @JsonIgnoreProperties(value = "issues",
+        allowSetters = true)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "locationid",
@@ -45,12 +42,12 @@ public class Issue extends Auditable
     public Issue(
         String description,
         String imageurl,
-        long userid,
+        User user,
         Location location)
     {
         this.description = description;
         this.imageurl = imageurl;
-        this.userid = userid;
+        this.user = user;
         this.location = location;
     }
 
@@ -84,15 +81,15 @@ public class Issue extends Auditable
         this.imageurl = imageurl;
     }
 
-//    public User getUser()
-//    {
-//        return user;
-//    }
-//
-//    public void setUser(User user)
-//    {
-//        this.user = user;
-//    }
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 
     public Location getLocation()
     {
@@ -104,13 +101,4 @@ public class Issue extends Auditable
         this.location = location;
     }
 
-    public long getUserid()
-    {
-        return userid;
-    }
-
-    public void setUserid(long userid)
-    {
-        this.userid = userid;
-    }
 }

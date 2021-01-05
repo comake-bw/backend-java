@@ -1,10 +1,7 @@
 package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
-import com.lambdaschool.comake.models.Issue;
-import com.lambdaschool.comake.models.Role;
-import com.lambdaschool.comake.models.User;
-import com.lambdaschool.comake.models.UserRoles;
+import com.lambdaschool.comake.models.*;
 import com.lambdaschool.comake.repository.LocationRepository;
 import com.lambdaschool.comake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,17 +112,26 @@ public class UserServiceImpl
                 .add(new UserRoles(newUser, addRole));
         }
 
-//        newUser.getIssues()
-//            .clear();
-//        for (Issue issue : user.getIssues())
-//        {
-//            Issue newIssue = issue;
-//            newIssue.setUserid(issue.getUserid());
-//            newIssue.setImageurl(issue.getImageurl());
-//            newIssue.setLocation(issue.getLocation());
-//            newIssue.setDescription(issue.getDescription());
-//            newUser.getIssues().add(newIssue);
-//        }
+        newUser.getIssues()
+            .clear();
+        for (Issue issue : user.getIssues())
+        {
+            Issue newIssue = issue;
+            newIssue.setUser(issue.getUser());
+            newIssue.setImageurl(issue.getImageurl());
+            newIssue.setLocation(issue.getLocation());
+            newIssue.setDescription(issue.getDescription());
+            newUser.getIssues().add(newIssue);
+        }
+
+        newUser.getUserissues()
+            .clear();
+        for (UserIssues ui : user.getUserissues())
+        {
+            newUser.getUserissues()
+                .add(new UserIssues(newUser, ui.getIssue()));
+        }
+
         return userrepos.save(newUser);
     }
 

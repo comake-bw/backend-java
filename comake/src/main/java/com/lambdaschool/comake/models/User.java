@@ -36,13 +36,12 @@ public class User extends Auditable
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
-//    @OneToMany(mappedBy = "user",
-//        cascade = CascadeType.ALL,
-//        orphanRemoval = true)
-//    @JsonIgnoreProperties(value = "user",
-//        allowSetters = true)
-//    private Set<Issue> issues = new HashSet<>();
-
+    @OneToMany(mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user",
+        allowSetters = true)
+    private Set<Issue> issues = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "locationid")
@@ -107,15 +106,15 @@ public class User extends Auditable
         this.password = passwordEncoder.encode(password);
     }
 
-//    public Set<Issue> getIssues()
-//    {
-//        return issues;
-//    }
-//
-//    public void setIssues(Set<Issue> issues)
-//    {
-//        this.issues = issues;
-//    }
+    public Set<Issue> getIssues()
+    {
+        return issues;
+    }
+
+    public void setIssues(Set<Issue> issues)
+    {
+        this.issues = issues;
+    }
 
     public Location getLocation()
     {
