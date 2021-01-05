@@ -17,9 +17,9 @@ public interface IssueService
 
     Issue save(Issue issue);
 
-    List<Issue> findListByUserid(long id);
-    List<Issue> findListByLocationid(long id);
-    List<Issue> findListByZipcode(long zipcode);
+    List <Issue> findListByUserid(long id);
+    List <Issue> findListByLocationid(long id);
+    List <Issue> findListByZipcode(long zipcode);
 
     void deleteAll();
 
