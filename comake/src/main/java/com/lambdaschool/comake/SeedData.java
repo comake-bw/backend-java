@@ -98,9 +98,9 @@ public class SeedData
 
         u3 = userService.save(u3);
 
-        Issue i1 = new Issue("pot hole", "pothole.imgurl.here", u1, l1);
-        Issue i2 = new Issue("highway clean up", "highway-cleanup.imgurl.here", u2, l2);
-        Issue i3 = new Issue("restore historic cottage", "historic-cottage-restoration.imgurl.here", u3, l3);
+        Issue i1 = new Issue("pot hole", "pothole.imgurl.here", 1, l1);
+        Issue i2 = new Issue("highway clean up", "highway-cleanup.imgurl.here", 2, l2);
+        Issue i3 = new Issue("restore historic cottage", "historic-cottage-restoration.imgurl.here", 3, l3);
 
         i1 = issueService.save(i1);
         i2 = issueService.save(i2);

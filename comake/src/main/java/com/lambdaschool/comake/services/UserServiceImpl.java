@@ -115,52 +115,18 @@ public class UserServiceImpl
                 .add(new UserRoles(newUser, addRole));
         }
 
-        newUser.getIssues()
-            .clear();
-        for (Issue issue : user.getIssues())
-        {
-            Issue newIssue = issue;
-            newIssue.setUser(issue.getUser());
-            newIssue.setImageurl(issue.getImageurl());
-            newIssue.setLocation(issue.getLocation());
-            newIssue.setDescription(issue.getDescription());
-            newUser.getIssues().add(newIssue);
-        }
-        return userrepos.save(newUser);
-//
+//        newUser.getIssues()
+//            .clear();
+//        for (Issue issue : user.getIssues())
 //        {
-//            "userid": 9,
-//            "username": "Phil",
-//            "roles": [
-//            {
-//                "role": {
-//                "roleid": 1,
-//                    "name": "USER"
-//            }
-//            },
-//            {
-//                "role": {
-//                "roleid": 2,
-//                    "name": "ADMIN"
-//            }
-//            }
-//        ],
-//            "issues": [
-//            {
-//                "issueid": 10,
-//                "description": "highway clean up",
-//                "imageurl": "highway-cleanup.imgurl.here",
-//                "location": {
-//                "locationid": 4,
-//                    "zipcode": 222222
-//            }
-//            }
-//        ],
-//            "location": {
-//            "locationid": 4,
-//                "zipcode": 222222
+//            Issue newIssue = issue;
+//            newIssue.setUserid(issue.getUserid());
+//            newIssue.setImageurl(issue.getImageurl());
+//            newIssue.setLocation(issue.getLocation());
+//            newIssue.setDescription(issue.getDescription());
+//            newUser.getIssues().add(newIssue);
 //        }
-//        }
+        return userrepos.save(newUser);
     }
 
 
