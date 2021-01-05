@@ -4,6 +4,7 @@ import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.models.UserMinimum;
 import com.lambdaschool.comake.models.UserRoles;
+import com.lambdaschool.comake.services.LocationService;
 import com.lambdaschool.comake.services.RoleService;
 import com.lambdaschool.comake.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class Oauthendpoints
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private LocationService locationService;
+
     /**
      * Connect to the Token store so the application can remove the token
      */
@@ -74,10 +78,11 @@ public class Oauthendpoints
     {
         // Create the user
         User newuser = new User();
+        Location newLocation = new Location();
+        newLocation.setZipcode(newminuser.getZipcode());
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
-        newuser.setLocation(new Location(newminuser.getZipcode()));
 
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
@@ -85,7 +90,15 @@ public class Oauthendpoints
             roleService.findByName("USER")));
         newuser.setRoles(newRoles);
 
-        //
+
+        // setting users for location
+        Set<User> newUsers = new HashSet<>();
+        newUsers.add(newuser);
+        newLocation.setUsers(newUsers);
+        newLocation = locationService.save(newLocation);
+
+        // add location for new user.
+        newuser.setLocation(newLocation);
 
         newuser = userService.save(newuser);
 
