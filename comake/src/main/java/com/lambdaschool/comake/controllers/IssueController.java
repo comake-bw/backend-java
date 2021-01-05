@@ -2,11 +2,13 @@ package com.lambdaschool.comake.controllers;
 
 import com.lambdaschool.comake.models.Issue;
 import com.lambdaschool.comake.services.IssueService;
+import com.lambdaschool.comake.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,6 +24,9 @@ public class IssueController
 {
     @Autowired
     IssueService issueService;
+
+    @Autowired
+    UserService userService;
 
     // GET http://localhost:2019/posts/posts get all posts
     @GetMapping(value = "/posts",
@@ -76,6 +81,10 @@ public class IssueController
                                                                    URISyntaxException
     {
         newIssue.setIssueid(0);
+        newIssue.setUser(userService.findByName(SecurityContextHolder.getContext()
+            .getAuthentication().getName()));
+        newIssue.setLocation(newIssue.getUser().getLocation());
+
         newIssue = issueService.save(newIssue);
 
         // set the location header for the newly created resource
@@ -103,6 +112,12 @@ public class IssueController
             long postid)
     {
         updateIssue.setIssueid(postid);
+
+        updateIssue.setUser(userService.findByName(SecurityContextHolder.getContext()
+            .getAuthentication().getName()));
+        updateIssue.setLocation(updateIssue.getUser().getLocation());
+
+
         issueService.save(updateIssue);
 
         return new ResponseEntity<>(HttpStatus.OK);
