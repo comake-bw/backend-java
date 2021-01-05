@@ -1,5 +1,6 @@
 package com.lambdaschool.comake.controllers;
 
+import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.models.UserMinimum;
 import com.lambdaschool.comake.models.UserRoles;
@@ -76,12 +77,15 @@ public class Oauthendpoints
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
+        newuser.setLocation(new Location(newminuser.getZipcode()));
 
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
         newRoles.add(new UserRoles(newuser,
             roleService.findByName("USER")));
         newuser.setRoles(newRoles);
+
+        //
 
         newuser = userService.save(newuser);
 
