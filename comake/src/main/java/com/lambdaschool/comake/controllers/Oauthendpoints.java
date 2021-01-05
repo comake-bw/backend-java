@@ -87,8 +87,15 @@ public class Oauthendpoints
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
-        newuser.setLocation(locationrepos.findLocationByZipcode(newminuser.getZipcode()));
-        
+
+        if (locationrepos.findLocationByZipcode(newminuser.getZipcode()) != null) {
+            newuser.setLocation(locationrepos.findLocationByZipcode(newminuser.getZipcode()));
+        } else {
+            Location newLocation = new Location(newminuser.getZipcode());
+            locationrepos.save(newLocation);
+            newuser.setLocation(newLocation);
+        }
+
         // add the default role of user
         Set<UserRoles> newRoles = new HashSet<>();
         newRoles.add(new UserRoles(newuser,
