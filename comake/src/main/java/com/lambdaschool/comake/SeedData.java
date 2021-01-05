@@ -39,8 +39,6 @@ public class SeedData
     @Autowired
     IssueService issueService;
 
-    @Autowired
-    LikeService likeService;
 
     /**
      * Generates test, seed data for our application
@@ -70,11 +68,15 @@ public class SeedData
         l2 = locationService.save(l2);
         l3 = locationService.save(l3);
 
+
+
+
         // user1, user
         User u1 = new User("user1",
             "password", l1);
         u1.getRoles()
             .add(new UserRoles(u1, r1));
+
 
         u1 = userService.save(u1);
 
@@ -96,10 +98,6 @@ public class SeedData
 
         u3 = userService.save(u3);
 
-        /************
-         * Seed Issues
-         ************/
-
         Issue i1 = new Issue("pot hole", "pothole.imgurl.here", u1, l1);
         Issue i2 = new Issue("highway clean up", "highway-cleanup.imgurl.here", u2, l2);
         Issue i3 = new Issue("restore historic cottage", "historic-cottage-restoration.imgurl.here", u3, l3);
@@ -108,13 +106,19 @@ public class SeedData
         i2 = issueService.save(i2);
         i3 = issueService.save(i3);
 
-        Like like1 = new Like(u1, i1);
-        Like like2 = new Like(u2, i2);
-        Like like3 = new Like(u3, i3);
+        u1.getUserissues().add(new UserIssues(u1, i1));
+        u1.getUserissues().add(new UserIssues(u1, i2));
+        u1.getUserissues().add(new UserIssues(u1, i3));
 
-        like1 = likeService.save(like1);
-        like2 = likeService.save(like2);
-        like3 = likeService.save(like3);
+        u2.getUserissues().add(new UserIssues(u2, i2));
+        u2.getUserissues().add(new UserIssues(u2, i3));
+
+        u3.getUserissues().add(new UserIssues(u3, i3));
+
+        u1 = userService.save(u1);
+        u2 = userService.save(u2);
+        u3 = userService.save(u3);
+
 
     }
 }

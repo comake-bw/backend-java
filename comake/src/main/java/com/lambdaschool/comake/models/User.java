@@ -48,6 +48,14 @@ public class User extends Auditable
     @JsonIgnoreProperties({"users", "issues"})
     private Location location;
 
+    // userissue (likes)
+    @OneToMany(mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user",
+        allowSetters = true)
+    private Set<UserIssues> userissues = new HashSet<>();
+
     public User()
     {
     }
@@ -128,6 +136,16 @@ public class User extends Auditable
         this.roles = roles;
     }
 
+    public Set<UserIssues> getUserissues()
+    {
+        return userissues;
+    }
+
+    public void setUserissues(Set<UserIssues> userissues)
+    {
+        this.userissues = userissues;
+    }
+
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()
     {
@@ -143,4 +161,6 @@ public class User extends Auditable
 
         return rtnList;
     }
+
+
 }

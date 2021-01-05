@@ -2,9 +2,6 @@ package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Issue;
-import com.lambdaschool.comake.models.Like;
-import com.lambdaschool.comake.models.Location;
-import com.lambdaschool.comake.models.User;
 import com.lambdaschool.comake.repository.IssueRepository;
 import com.lambdaschool.comake.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
