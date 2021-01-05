@@ -126,7 +126,7 @@ public class IssueController
 
     // DELETE http://localhost:2019/posts/post delete entire post
     @DeleteMapping(value = "/post/{id}")
-    public ResponseEntity<?> deleteBookById(@PathVariable long id)
+    public ResponseEntity<?> deletePostById(@PathVariable long id)
     {
         issueService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
