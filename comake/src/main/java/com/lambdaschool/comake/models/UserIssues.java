@@ -35,7 +35,7 @@ public class UserIssues
     @Id
     @ManyToOne
     @JoinColumn(name = "issueid")
-    @JsonIgnoreProperties(value = "users",
+    @JsonIgnoreProperties(value = {"user", "issues", "userissues"},
         allowSetters = true)
     private Issue issue;
 
