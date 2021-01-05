@@ -15,6 +15,7 @@ public class UserMinimum
      * The user's password (String)
      */
     private String password;
+    private long zipcode;
 
     /**
      * Getter for the username
@@ -55,5 +56,15 @@ public class UserMinimum
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public long getZipcode()
+    {
+        return zipcode;
+    }
+
+    public void setZipcode(long zipcode)
+    {
+        this.zipcode = zipcode;
     }
 }
