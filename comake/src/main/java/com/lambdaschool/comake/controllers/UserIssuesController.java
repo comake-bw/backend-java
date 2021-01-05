@@ -49,7 +49,7 @@ public class UserIssuesController
 
 
     // POST http://localhost:2019/likes/like/{postid} upvote an issue
-    @PostMapping(value = "/like/{postid}", consumes = "application/json")
+    @PostMapping(value = "/like/{postid}")
     public ResponseEntity<?> addNewLike(@PathVariable long postid) throws
                                                             URISyntaxException
     {
@@ -65,6 +65,7 @@ public class UserIssuesController
 //        userIssueService.save(newUserIssue);
 //
         currentUser.getUserissues().add(new UserIssues(currentUser, currentIssue));
+
         userService.save(currentUser);
 
 //        u1.getUserissues().add(new UserIssues(u1, i1));
