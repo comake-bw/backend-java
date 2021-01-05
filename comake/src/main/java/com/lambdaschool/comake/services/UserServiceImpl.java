@@ -1,10 +1,7 @@
 package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
-import com.lambdaschool.comake.models.Issue;
-import com.lambdaschool.comake.models.Role;
-import com.lambdaschool.comake.models.User;
-import com.lambdaschool.comake.models.UserRoles;
+import com.lambdaschool.comake.models.*;
 import com.lambdaschool.comake.repository.LocationRepository;
 import com.lambdaschool.comake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,41 +123,16 @@ public class UserServiceImpl
             newIssue.setDescription(issue.getDescription());
             newUser.getIssues().add(newIssue);
         }
+
+        newUser.getUserissues()
+            .clear();
+        for (UserIssues ui : user.getUserissues())
+        {
+            newUser.getUserissues()
+                .add(new UserIssues(newUser, ui.getIssue()));
+        }
+
         return userrepos.save(newUser);
-//
-//        {
-//            "userid": 9,
-//            "username": "Phil",
-//            "roles": [
-//            {
-//                "role": {
-//                "roleid": 1,
-//                    "name": "USER"
-//            }
-//            },
-//            {
-//                "role": {
-//                "roleid": 2,
-//                    "name": "ADMIN"
-//            }
-//            }
-//        ],
-//            "issues": [
-//            {
-//                "issueid": 10,
-//                "description": "highway clean up",
-//                "imageurl": "highway-cleanup.imgurl.here",
-//                "location": {
-//                "locationid": 4,
-//                    "zipcode": 222222
-//            }
-//            }
-//        ],
-//            "location": {
-//            "locationid": 4,
-//                "zipcode": 222222
-//        }
-//        }
     }
 
 

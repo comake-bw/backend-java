@@ -68,16 +68,11 @@ public class SeedData
         l2 = locationService.save(l2);
         l3 = locationService.save(l3);
 
-
-
-
         // user1, user
         User u1 = new User("user1",
             "password", l1);
         u1.getRoles()
             .add(new UserRoles(u1, r1));
-
-
         u1 = userService.save(u1);
 
         // user 2, user + admin
@@ -115,10 +110,9 @@ public class SeedData
 
         u3.getUserissues().add(new UserIssues(u3, i3));
 
-        u1 = userService.save(u1);
-        u2 = userService.save(u2);
-        u3 = userService.save(u3);
-
+        userService.save(u1);
+        userService.save(u2);
+        userService.save(u3);
 
     }
 }

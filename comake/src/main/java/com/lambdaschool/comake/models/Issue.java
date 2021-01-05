@@ -35,6 +35,13 @@ public class Issue extends Auditable
         allowSetters = true)
     private Location location;
 
+    @OneToMany(mappedBy = "issue",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "issue",
+        allowSetters = true)
+    private Set<UserIssues> userissues = new HashSet<>();
+
     public Issue()
     {
     }
