@@ -1,6 +1,7 @@
 package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
+import com.lambdaschool.comake.models.Issue;
 import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,31 @@ public class LocationServiceImpl implements LocationService
             newLocation = locationrepos.findById(location.getLocationid())
                 .orElseThrow(() -> new ResourceNotFoundException("Location id " + location.getLocationid() + " not found!"));
         }
+        if (location.getZipcode() != 0) {
+            newLocation.setZipcode(location.getZipcode());
+        }
 
-        newLocation.setZipcode(location.getZipcode());
+//        if (location.getIssues().size() > 0) {
+//            newLocation.getIssues().clear();
+//            for (Issue issue : location.getIssues()) {
+//                Issue newIssue = new Issue();
+//                newIssue.getUser()
+//        }
+
+
+//        if (employee.getJobtitles().size() > 0)
+//        {
+//            currentEmployee.getJobtitles()
+//                .clear();
+//            for (JobTitle jt : employee.getJobtitles())
+//            {
+//                JobTitle newJT = jtrepos.findById(jt.getJobtitleid())
+//                    .orElseThrow(() -> new EntityNotFoundException("JobTitle " + jt.getJobtitleid() + " Not Found"));
+//
+//                currentEmployee.getJobtitles()
+//                    .add(newJT);
+//            }
+
         newLocation.setIssues(location.getIssues());
         newLocation.setUsers(location.getUsers());
 
@@ -65,14 +89,36 @@ public class LocationServiceImpl implements LocationService
 
     @Transactional
     @Override
-    public Location update(Location Location,
-                          long id)
+    public Location update(Location location, long id)
     {
-        Location currentLocation = findLocationById(id);
+        Location currentLocation = locationrepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Location " + id + " not found!"));
 
-        if (Location.getZipcode() != 0)
+        if (location.getZipcode() != 0)
         {
-            currentLocation.setZipcode(Location.getZipcode());
+            currentLocation.setZipcode(location.getZipcode());
+        }
+
+        if (location.getIssues().size() > 0) {
+
+        }
+
+        //        if (employee.getJobtitles().size() > 0)
+        //        {
+        //            currentEmployee.getJobtitles()
+        //                .clear();
+        //            for (JobTitle jt : employee.getJobtitles())
+        //            {
+        //                JobTitle newJT = jtrepos.findById(jt.getJobtitleid())
+        //                    .orElseThrow(() -> new EntityNotFoundException("JobTitle " + jt.getJobtitleid() + " Not Found"));
+        //
+        //                currentEmployee.getJobtitles()
+        //                    .add(newJT);
+        //            }
+
+
+        if (location.getUsers().size() > 0) {
+
         }
 
         return locationrepos.save(currentLocation);

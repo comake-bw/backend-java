@@ -13,7 +13,7 @@ public interface IssueService
 
     void delete(long id);
 
-    Issue update(long issueid, Issue issue);
+    Issue update(Issue issue, long issueid);
 
     Issue save(Issue issue);
 

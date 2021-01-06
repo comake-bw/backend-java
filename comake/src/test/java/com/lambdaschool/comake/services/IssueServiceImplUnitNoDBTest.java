@@ -181,7 +181,6 @@ public class IssueServiceImplUnitNoDBTest
     public void save()
     {
         // making an issue to test
-
         Role r1 = new Role("user");
         r1.setRoleid(1);
 
@@ -210,16 +209,36 @@ public class IssueServiceImplUnitNoDBTest
             addIssue.getDescription());
     }
 
-    @Test
-    public void saveput()
-    {
-
-    }
-
-    @Test
+    @Test(expected = ResourceNotFoundException.class)
     public void saveputNotFound()
     {
+        // making an issue to test
+        Role r1 = new Role("user");
+        r1.setRoleid(1);
 
+        Location l1 = new Location(111111);
+        l1.setLocationid(1);
+
+        // user1, user
+        User u1 = new User("user1",
+            "password", l1);
+        u1.setUserid(10);
+        u1.getRoles()
+            .add(new UserRoles(u1, r1));
+
+        Issue i1 = new Issue("pot hole", "pothole.imgurl.here", u1, l1);
+        i1.setIssueid(11);
+
+        Mockito.when(issuerepos.findById(11L))
+            .thenReturn(Optional.empty());
+
+        Mockito.when(issuerepos.save(any(Issue.class)))
+            .thenReturn(i1);
+
+        Issue addIssue = issueService.save(i1);
+        assertNotNull(addIssue);
+        assertEquals(i1.getDescription(),
+            addIssue.getDescription());
     }
 
     @Test

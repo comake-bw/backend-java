@@ -24,7 +24,7 @@ public class Location extends Auditable
     @OneToMany(mappedBy = "location",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
-    @JsonIgnoreProperties("location")
+    @JsonIgnoreProperties({"location", "issues", "roles"})
     private Set<User> users = new HashSet<>();
 
     @OneToMany(mappedBy = "location",
