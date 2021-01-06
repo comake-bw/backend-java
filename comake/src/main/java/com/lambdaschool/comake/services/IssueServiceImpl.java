@@ -2,6 +2,9 @@ package com.lambdaschool.comake.services;
 
 import com.lambdaschool.comake.exceptions.ResourceNotFoundException;
 import com.lambdaschool.comake.models.Issue;
+import com.lambdaschool.comake.models.Location;
+import com.lambdaschool.comake.models.Role;
+import com.lambdaschool.comake.models.UserRoles;
 import com.lambdaschool.comake.repository.IssueRepository;
 import com.lambdaschool.comake.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service(value = "issueService")
 public class IssueServiceImpl implements IssueService
 {
@@ -19,6 +23,7 @@ public class IssueServiceImpl implements IssueService
 
     @Autowired
     private IssueService issueService;
+
 
     @Override
     public List<Issue> findAll()
@@ -51,21 +56,29 @@ public class IssueServiceImpl implements IssueService
 
     @Transactional
     @Override
-    public Issue update(
-        long id,
-        Issue issue)
+    public Issue update(Issue issue, long id)
     {
         Issue currentIssue = issuerepos.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Issue id " + id + " not found!"));
 
-        if (issue.getDescription() != null) {
+        if (issue.getDescription() != null)
+        {
             currentIssue.setDescription(issue.getDescription());
         }
-        if (issue.getImageurl() != null) {
+        if (issue.getImageurl() != null)
+        {
             currentIssue.setImageurl(issue.getImageurl());
         }
 
         return issuerepos.save(currentIssue);
+
+        //        if (issue.getUser().getUsername() != null) {
+        //            currentIssue.getUser().setUsername(issue.getUser().getUsername());
+        //        }
+        //        if (issue.getUser().getLocation().getZipcode() != 0) {
+        //            currentIssue.getLocation().setZipcode(issue.getLocation()
+        //                .getZipcode());
+        //
     }
 
     @Transactional

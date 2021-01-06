@@ -16,7 +16,7 @@ public interface LocationService
 
     Location save(Location role);
 
-    Location update(Location role, long id);
+    Location update(Location updateLocation, long id);
 
     void deleteAll();
 }

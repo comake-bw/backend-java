@@ -15,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties("userissues")
 public class User extends Auditable
 {
     @Id
@@ -52,7 +53,7 @@ public class User extends Auditable
     @OneToMany(mappedBy = "user",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
-    @JsonIgnoreProperties(value = "user",
+    @JsonIgnoreProperties(value = {"user", "userissues"},
         allowSetters = true)
     private Set<UserIssues> userissues = new HashSet<>();
 

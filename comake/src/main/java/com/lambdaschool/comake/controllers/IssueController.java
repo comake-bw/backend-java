@@ -1,6 +1,7 @@
 package com.lambdaschool.comake.controllers;
 
 import com.lambdaschool.comake.models.Issue;
+import com.lambdaschool.comake.models.Location;
 import com.lambdaschool.comake.services.IssueService;
 import com.lambdaschool.comake.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,6 @@ public class IssueController
             .getAuthentication().getName()));
         updateIssue.setLocation(updateIssue.getUser().getLocation());
 
-
         issueService.save(updateIssue);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -129,6 +129,19 @@ public class IssueController
     public ResponseEntity<?> deletePostById(@PathVariable long id)
     {
         issueService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/post/{postid}",
+        consumes = {"application/json"})
+    public ResponseEntity<?> updateIssue(
+        @RequestBody
+            Issue updateIssue,
+        @PathVariable
+            long postid)
+    {
+        issueService.update(updateIssue,
+            postid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

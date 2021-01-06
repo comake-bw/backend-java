@@ -93,4 +93,17 @@ public class LocationController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping(value = "/location/{locationid}",
+        consumes = {"application/json"})
+    public ResponseEntity<?> updateEmployee(
+        @RequestBody
+            Location updateLocation,
+        @PathVariable
+            long locationid)
+    {
+        locationService.update(updateLocation,
+            locationid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
