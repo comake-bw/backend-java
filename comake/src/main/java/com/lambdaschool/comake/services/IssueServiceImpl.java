@@ -20,10 +20,6 @@ public class IssueServiceImpl implements IssueService
     @Autowired
     private IssueService issueService;
 
-    @Autowired
-    private LocationRepository locationrepos;
-
-
     @Override
     public List<Issue> findAll()
     {

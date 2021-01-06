@@ -1,15 +1,15 @@
 package com.lambdaschool.comake;
 
 import com.lambdaschool.comake.models.*;
-import com.lambdaschool.comake.services.*;
+import com.lambdaschool.comake.services.IssueService;
+import com.lambdaschool.comake.services.LocationService;
+import com.lambdaschool.comake.services.RoleService;
+import com.lambdaschool.comake.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * SeedData puts both known and random data into the database. It implements CommandLineRunner.
@@ -45,16 +45,6 @@ public class SeedData
     @Autowired
     IssueService issueService;
 
-
-    /**
-     * Generates test, seed data for our application
-     * First a set of known data is seeded into our database.
-     * Second a random set of data using Java Faker is seeded into our database.
-     * Note this process does not remove data from the database. So if data exists in the database
-     * prior to running this process, that data remains in the database.
-     *
-     * @param args The parameter is required by the parent interface but is not used in this process.
-     */
     @Transactional
     @Override
     public void run(String[] args) throws
