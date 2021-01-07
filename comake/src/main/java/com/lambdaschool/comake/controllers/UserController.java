@@ -2,11 +2,15 @@ package com.lambdaschool.comake.controllers;
 
 
 import com.lambdaschool.comake.models.User;
+import com.lambdaschool.comake.repository.UserRepository;
 import com.lambdaschool.comake.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +31,9 @@ public class UserController
      */
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userrepos;
 
     /**
      * Returns a list of all users
@@ -52,13 +59,14 @@ public class UserController
      * @return JSON object of the user you seek
      * @see UserService#findUserById(long) UserService.findUserById(long)
      */
-    @GetMapping(value = "/user/{userId}",
+    @GetMapping(value = "/user",
         produces = "application/json")
-    public ResponseEntity<?> getUserById(
-        @PathVariable
-            Long userId)
+    public ResponseEntity<?> getUserById()
     {
-        User u = userService.findUserById(userId);
+        Authentication authentication = SecurityContextHolder.getContext()
+            .getAuthentication();
+
+        User u = userrepos.findByUsername(authentication.getName());
         return new ResponseEntity<>(u,
             HttpStatus.OK);
     }
